@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script>
+            $(document).ready(function () {
+                $("#btnSquareNumbers").click(function () {
+
+                    var Calculate = $("#txtString").val();
+                    
+                    $.ajax({
+                        url: "/api/SquareNumbers/SquareNums/?" + "txtString=" + Calculate,
+                        type: "POST",
+                        dataType: 'json',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(Calculate),
+
+                        success: function (result) {
+                            $("#txtResult").val(result);
+                        },
+                        error: function (xhr, status, error) {
+                            var err = eval("(" + xhr.responseText + ")");
+                            $("#txtResult").val(err.Message)
+                        }
+                    });
+                });
+            });
+    </script>
+
+</head>
+<body>
+    <textarea id="txtString" cols=50 rows="15"></textarea><br>
+    <input type="button" value="Square All Numbers" id="btnSquareNumbers"><br>
+    <output type="text" id="txtResult" disabled />
+    <br><br>
+
+</body>
+</html>
